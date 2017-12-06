@@ -42,6 +42,8 @@ int pos_carro2[2];
 float cor_carro3[3];
 int pos_carro3[2];
 int idx_base = 0;
+
+int win = 500;
  // Globals.
  static float t = 0.0; // Animation parameter.
  static float Xangle = 0.0, Yangle = 0.0, Zangle = 0.0; // Angles to rotate scene.
@@ -155,6 +157,7 @@ void setup(void)
     cor_carro3[2] = (rand()%10)/10.0;
     pos_carro3[0] = -100;
     pos_carro3[1] = 500;
+    glOrtho(-500.0, 500.0, -500.0, 500.0, -1000.0, 1000.0);                       // Estabelece a janela de seleção (left, right, bottom, top)
 
 }
 
@@ -680,8 +683,8 @@ void resize(int w, int h)
     glViewport (0, 0, w, h);                               // Especifica as dimensões da Viewport
     glMatrixMode(GL_PROJECTION);                                    // Inicializa o sistema de coordenadas
     glLoadIdentity();                                               // Substitui a matriz atual pela matriz identidade
-
-    glOrtho(-500.0, 500.0, -500.0, 500.0, -1000.0, 1000.0);                       // Estabelece a janela de seleção (left, right, bottom, top)
+    // gluOrtho2D(-win, win, -win, win);
+    glOrtho(-win, win, -win, win, -1000.0, 1000.0);                       // Estabelece a janela de seleção (left, right, bottom, top)
 
     glMatrixMode(GL_MODELVIEW);                                     // Especifica qual é a matriz atual
     glLoadIdentity();                                               // Substitui a matriz atual pela matriz identidade
@@ -732,6 +735,26 @@ void keyInput(unsigned char key, int x, int y)
         case 'Z':
             Zangle -= 5.0;
             if (Zangle < 0.0) Zangle += 360.0;
+            break;
+        case '=':
+            win+=20;
+            glMatrixMode(GL_PROJECTION);                                    // Inicializa o sistema de coordenadas
+            glLoadIdentity();                                               // Substitui a matriz atual pela matriz identidade
+            // gluOrtho2D(-win, win, -win, win);
+            glOrtho(-win, win, -win, win, -1000.0, 1000.0);                       // Estabelece a janela de seleção (left, right, bottom, top)
+
+            glMatrixMode(GL_MODELVIEW);                                     // Especifica qual é a matriz atual
+            glLoadIdentity();     
+            break;
+        case '-':
+            win-=20;
+            glMatrixMode(GL_PROJECTION);                                    // Inicializa o sistema de coordenadas
+            glLoadIdentity();                                               // Substitui a matriz atual pela matriz identidade
+            // gluOrtho2D(-win, win, -win, win);
+            glOrtho(-win, win, -win, win, -1000.0, 1000.0);                       // Estabelece a janela de seleção (left, right, bottom, top)
+
+            glMatrixMode(GL_MODELVIEW);                                     // Especifica qual é a matriz atual
+            glLoadIdentity();     
             break;
         default:
            return;
